@@ -17,10 +17,11 @@ import (
 	"k8s.io/apiserver/pkg/registry/generic/registry"
 	registryrest "k8s.io/apiserver/pkg/registry/rest"
 	"k8s.io/klog/v2"
-	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource"
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource/util"
-	"sigs.k8s.io/apiserver-runtime/pkg/builder/rest"
 	contextutil "sigs.k8s.io/apiserver-runtime/pkg/util/context"
+
+	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource"
+	"sigs.k8s.io/apiserver-runtime/pkg/builder/rest"
 )
 
 // singletonProvider ensures different versions of the same resource share storage
@@ -29,6 +30,10 @@ type singletonProvider struct {
 	Provider rest.ResourceHandlerProvider
 	storage  registryrest.Storage
 	err      error
+}
+
+func (s *singletonProvider) Storage() registryrest.Storage {
+	return s.storage
 }
 
 func (s *singletonProvider) Get(
