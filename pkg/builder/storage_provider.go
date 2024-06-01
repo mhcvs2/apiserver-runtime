@@ -32,6 +32,10 @@ type singletonProvider struct {
 	err      error
 }
 
+func (s *singletonProvider) Storage() registryrest.Storage {
+	return s.storage
+}
+
 func (s *singletonProvider) Get(
 	scheme *runtime.Scheme, optsGetter generic.RESTOptionsGetter) (registryrest.Storage, error) {
 	s.Once.Do(func() {

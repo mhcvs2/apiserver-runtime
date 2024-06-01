@@ -24,6 +24,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
+	registryrest "k8s.io/apiserver/pkg/registry/rest"
 	genericapiserver "k8s.io/apiserver/pkg/server"
 
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
@@ -43,6 +44,13 @@ type Server struct {
 	orderedGroupVersions []schema.GroupVersion
 	schemes              []*runtime.Scheme
 	schemeBuilder        runtime.SchemeBuilder
+}
+
+func (a *Server) GetStorage(gr schema.GroupResource) registryrest.Storage {
+	if a.storageProvider[gr] == nil {
+		return nil
+	}
+	return a.storageProvider[gr].Storage()
 }
 
 // Build returns a Command used to run the apiserver
