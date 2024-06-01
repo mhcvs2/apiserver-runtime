@@ -30,6 +30,7 @@ import (
 
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource"
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource/resourcestrategy"
+	"sigs.k8s.io/apiserver-runtime/pkg/storagecache"
 )
 
 type StorageProvider func(s *runtime.Scheme, g genericregistry.RESTOptionsGetter) (rest.Storage, error)
@@ -71,6 +72,7 @@ func BuildAPIGroupInfos(s *runtime.Scheme, g genericregistry.RESTOptionsGetter) 
 					return nil, err
 				}
 				apis[gvr.Version][gvr.Resource] = storage
+				storagecache.Add(gvr.GroupResource(), storage)
 				// add the defaulting function for this version to the scheme
 				if _, ok := storage.(resourcestrategy.Defaulter); ok {
 					if obj, ok := storage.(runtime.Object); ok {
