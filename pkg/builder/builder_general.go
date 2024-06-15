@@ -3,6 +3,7 @@ package builder
 import (
 	"github.com/spf13/pflag"
 	pkgserver "k8s.io/apiserver/pkg/server"
+
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/cmd/server"
 )
@@ -28,5 +29,10 @@ func (a *Server) WithConfigFns(fns ...func(config *pkgserver.RecommendedConfig) 
 // WithFlagFns sets functions to customize the flags for the compiled binary.
 func (a *Server) WithFlagFns(fns ...func(set *pflag.FlagSet) *pflag.FlagSet) *Server {
 	server.FlagsFns = append(server.FlagsFns, fns...)
+	return a
+}
+
+func (a *Server) WithStoragePath(storagePath string) *Server {
+	a.storagePath = storagePath
 	return a
 }

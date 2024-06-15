@@ -43,6 +43,7 @@ type Server struct {
 	orderedGroupVersions []schema.GroupVersion
 	schemes              []*runtime.Scheme
 	schemeBuilder        runtime.SchemeBuilder
+	storagePath          string
 }
 
 // Build returns a Command used to run the apiserver
@@ -85,7 +86,7 @@ func (a *Server) Build() (*Command, error) {
 	if len(a.errs) != 0 {
 		return nil, errs{list: a.errs}
 	}
-	o := server.NewWardleServerOptions(os.Stdout, os.Stderr, a.orderedGroupVersions...)
+	o := server.NewWardleServerOptionsWithPath(os.Stdout, os.Stderr, a.storagePath, a.orderedGroupVersions...)
 	cmd := server.NewCommandStartServer(o, genericapiserver.SetupSignalHandler())
 	server.ApplyFlagsFns(cmd.Flags())
 	cmd.Flags().AddGoFlagSet(flag.CommandLine)

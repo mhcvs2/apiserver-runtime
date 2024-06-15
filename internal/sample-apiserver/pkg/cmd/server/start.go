@@ -28,6 +28,7 @@ import (
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	genericoptions "k8s.io/apiserver/pkg/server/options"
 	utilfeature "k8s.io/apiserver/pkg/util/feature"
+
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
 )
 
@@ -48,6 +49,24 @@ func NewWardleServerOptions(out, errOut io.Writer, versions ...schema.GroupVersi
 	o := &WardleServerOptions{
 		RecommendedOptions: genericoptions.NewRecommendedOptions(
 			getEctdPath(),
+			apiserver.Codecs.LegacyCodec(versions...),
+		),
+
+		StdOut: out,
+		StdErr: errOut,
+	}
+	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
+	return o
+}
+
+func NewWardleServerOptionsWithPath(out, errOut io.Writer, path string, versions ...schema.GroupVersion) *WardleServerOptions {
+	if path == "" {
+		path = getEctdPath()
+	}
+	// change: apiserver-runtime
+	o := &WardleServerOptions{
+		RecommendedOptions: genericoptions.NewRecommendedOptions(
+			path,
 			apiserver.Codecs.LegacyCodec(versions...),
 		),
 
