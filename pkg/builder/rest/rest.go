@@ -27,6 +27,7 @@ import (
 	"k8s.io/apiserver/pkg/registry/generic"
 	genericregistry "k8s.io/apiserver/pkg/registry/generic/registry"
 	"k8s.io/apiserver/pkg/registry/rest"
+
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource"
 )
 
@@ -72,14 +73,15 @@ func newStore(
 	single, list func() runtime.Object, gvr schema.GroupVersionResource,
 	s Strategy, optsGetter generic.RESTOptionsGetter, fn StoreFn) (*genericregistry.Store, error) {
 	store := &genericregistry.Store{
-		NewFunc:                  single,
-		NewListFunc:              list,
-		PredicateFunc:            s.Match,
-		DefaultQualifiedResource: gvr.GroupResource(),
-		TableConvertor:           s,
-		CreateStrategy:           s,
-		UpdateStrategy:           s,
-		DeleteStrategy:           s,
+		NewFunc:                   single,
+		NewListFunc:               list,
+		PredicateFunc:             s.Match,
+		DefaultQualifiedResource:  gvr.GroupResource(),
+		TableConvertor:            s,
+		CreateStrategy:            s,
+		UpdateStrategy:            s,
+		DeleteStrategy:            s,
+		SingularQualifiedResource: gvr.GroupResource(),
 	}
 
 	options := &generic.StoreOptions{RESTOptions: optsGetter, AttrFunc: GetAttrs}
