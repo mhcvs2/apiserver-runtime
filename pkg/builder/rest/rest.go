@@ -18,6 +18,7 @@ package rest
 
 import (
 	"fmt"
+	"strings"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -72,6 +73,8 @@ func NewWithFn(obj resource.Object, fn StoreFn) ResourceHandlerProvider {
 func newStore(
 	single, list func() runtime.Object, gvr schema.GroupVersionResource,
 	s Strategy, optsGetter generic.RESTOptionsGetter, fn StoreFn) (*genericregistry.Store, error) {
+	d := strings.TrimSuffix(gvr.GroupResource().String(), "s")
+	singularQualifiedGVR := schema.ParseGroupResource(d)
 	store := &genericregistry.Store{
 		NewFunc:                   single,
 		NewListFunc:               list,
@@ -81,7 +84,7 @@ func newStore(
 		CreateStrategy:            s,
 		UpdateStrategy:            s,
 		DeleteStrategy:            s,
-		SingularQualifiedResource: gvr.GroupResource(),
+		SingularQualifiedResource: singularQualifiedGVR,
 	}
 
 	options := &generic.StoreOptions{RESTOptions: optsGetter, AttrFunc: GetAttrs}
