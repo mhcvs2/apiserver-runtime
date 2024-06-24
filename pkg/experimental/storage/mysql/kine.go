@@ -4,6 +4,7 @@ package mysql
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/k3s-io/kine/pkg/endpoint"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -28,12 +29,14 @@ func NewMysqlStorageProvider(host string, port int32, username, password, databa
 	return func(s *genericregistry.Store, options *generic.StoreOptions) {
 		options.RESTOptions = &kineProxiedRESTOptionsGetter{
 			delegate: options.RESTOptions,
+			dsn:      fmt.Sprintf("mysql://%s:%s@tcp(%s:%s)/%s", username, password, host, port, database),
 		}
 	}
 }
 
 type kineProxiedRESTOptionsGetter struct {
 	delegate generic.RESTOptionsGetter
+	dsn      string
 }
 
 // GetRESTOptions implements RESTOptionsGetter interface.
@@ -48,7 +51,9 @@ func (g *kineProxiedRESTOptionsGetter) GetRESTOptions(resource schema.GroupResou
 	}
 
 	etcdConfig, err := endpoint.Listen(context.TODO(), endpoint.Config{
-		Endpoint: restOptions.StorageConfig.Transport.ServerList[0],
+		Endpoint:       g.dsn,
+		NotifyInterval: time.Millisecond * 500,
+		Listener:       restOptions.StorageConfig.Transport.ServerList[0],
 	})
 	if err != nil {
 		return generic.RESTOptions{}, err
