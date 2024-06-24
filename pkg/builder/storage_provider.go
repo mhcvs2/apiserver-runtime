@@ -17,6 +17,7 @@ import (
 	"k8s.io/apiserver/pkg/registry/generic/registry"
 	registryrest "k8s.io/apiserver/pkg/registry/rest"
 	"k8s.io/klog/v2"
+
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource/util"
 	contextutil "sigs.k8s.io/apiserver-runtime/pkg/util/context"
 
@@ -150,6 +151,10 @@ func (s *statusSubResourceStorage) Get(ctx context.Context, name string, options
 	return s.store.Get(ctx, name, options)
 }
 
+func (s *statusSubResourceStorage) Destroy() {
+
+}
+
 func (s *statusSubResourceStorage) New() runtime.Object {
 	return s.store.New()
 }
@@ -205,6 +210,10 @@ func (c *commonSubResourceStorage) Get(ctx context.Context, name string, options
 		options)
 }
 
+func (s *commonSubResourceStorage) Destroy() {
+
+}
+
 func (c *commonSubResourceStorage) Update(ctx context.Context,
 	name string,
 	objInfo registryrest.UpdatedObjectInfo,
@@ -245,6 +254,10 @@ func (c *connectorSubResourceStorage) Connect(ctx context.Context, id string, op
 		r)
 }
 
+func (s *connectorSubResourceStorage) Destroy() {
+
+}
+
 func (c *connectorSubResourceStorage) NewConnectOptions() (runtime.Object, bool, string) {
 	return c.subResourceConnector.NewConnectOptions()
 }
@@ -262,6 +275,10 @@ type scaleSubResourceStorage struct {
 
 func (s *scaleSubResourceStorage) GroupVersionKind(containingGV schema.GroupVersion) schema.GroupVersionKind {
 	return autoscalingv1.SchemeGroupVersion.WithKind("Scale")
+}
+
+func (s *scaleSubResourceStorage) Destroy() {
+
 }
 
 var _ registryrest.GroupVersionKindProvider = &scaleSubResourceStorage{}
