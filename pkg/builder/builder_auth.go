@@ -3,6 +3,7 @@ package builder
 import (
 	"github.com/spf13/pflag"
 	"k8s.io/klog"
+
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/cmd/server"
 )
 
@@ -42,7 +43,7 @@ func (a *Server) WithLocalDebugExtension() *Server {
 				klog.Fatal(`--bind-address must be "127.0.0.1" if --standalone-debug-mode is set`)
 			}
 			options.RecommendedOptions.Authorization = nil
-			options.RecommendedOptions.CoreAPI = nil
+			//options.RecommendedOptions.CoreAPI = nil
 			options.RecommendedOptions.Admission = nil
 		}
 		return options
