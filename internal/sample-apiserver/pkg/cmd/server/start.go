@@ -55,6 +55,7 @@ func NewWardleServerOptions(out, errOut io.Writer, versions ...schema.GroupVersi
 		StdErr: errOut,
 	}
 	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
+	o.RecommendedOptions.Etcd.SkipHealthEndpoints = true
 	return o
 }
 
@@ -73,6 +74,7 @@ func NewWardleServerOptionsWithPath(out, errOut io.Writer, path string, versions
 		StdErr: errOut,
 	}
 	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
+	o.RecommendedOptions.Etcd.SkipHealthEndpoints = true
 	return o
 }
 

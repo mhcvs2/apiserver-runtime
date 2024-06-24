@@ -29,7 +29,7 @@ func NewMysqlStorageProvider(host string, port int32, username, password, databa
 	return func(s *genericregistry.Store, options *generic.StoreOptions) {
 		options.RESTOptions = &kineProxiedRESTOptionsGetter{
 			delegate: options.RESTOptions,
-			dsn:      fmt.Sprintf("mysql://%s:%s@tcp(%s:%s)/%s", username, password, host, port, database),
+			dsn:      fmt.Sprintf("mysql://%s:%s@tcp(%s:%d)/%s", username, password, host, port, database),
 		}
 	}
 }
