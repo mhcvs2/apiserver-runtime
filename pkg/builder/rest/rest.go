@@ -73,8 +73,11 @@ func NewWithFn(obj resource.Object, fn StoreFn) ResourceHandlerProvider {
 func newStore(
 	single, list func() runtime.Object, gvr schema.GroupVersionResource,
 	s Strategy, optsGetter generic.RESTOptionsGetter, fn StoreFn) (*genericregistry.Store, error) {
-	d := strings.TrimSuffix(gvr.GroupResource().String(), "s")
-	singularQualifiedGVR := schema.ParseGroupResource(d)
+	d := strings.TrimSuffix(gvr.Resource, "s")
+	singularQualifiedGVR := schema.GroupResource{
+		Group:    gvr.Group,
+		Resource: d,
+	}
 	store := &genericregistry.Store{
 		NewFunc:                   single,
 		NewListFunc:               list,
