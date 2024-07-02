@@ -4,6 +4,7 @@ package mysql
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/k3s-io/kine/pkg/endpoint"
@@ -49,11 +50,12 @@ func (g *kineProxiedRESTOptionsGetter) GetRESTOptions(resource schema.GroupResou
 	if len(restOptions.StorageConfig.Transport.ServerList) != 1 {
 		return generic.RESTOptions{}, fmt.Errorf("no valid mysql dsn found")
 	}
-
+	tableName := strings.ToLower(resource.Resource)
 	etcdConfig, err := endpoint.Listen(context.TODO(), endpoint.Config{
 		Endpoint:       g.dsn,
 		NotifyInterval: time.Millisecond * 500,
 		Listener:       restOptions.StorageConfig.Transport.ServerList[0],
+		TableName:      tableName,
 	})
 	if err != nil {
 		return generic.RESTOptions{}, err

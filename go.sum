@@ -469,8 +469,6 @@ github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7V
 github.com/julz/importas v0.0.0-20210419104244-841f0c0fe66d h1:XeSMXURZPtUffuWAaq90o6kLgZdgu+QA8wk4MPC8ikI=
 github.com/julz/importas v0.0.0-20210419104244-841f0c0fe66d/go.mod h1:oSFU2R4XK/P7kNBrnL/FEQlDGN1/6WoxXEjSSXO0DV0=
 github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88/go.mod h1:3w7q1U84EfirKl04SVQ/s7nPm1ZPhiXd34z40TNz36k=
-github.com/k3s-io/kine v0.11.10 h1:6J7amx8vqbVSZE7bVh7iiVFbDBT8J6mhXh3bm611wDw=
-github.com/k3s-io/kine v0.11.10/go.mod h1:L4x3qotFebVh1ZVzYwFVL5PPfqw2sRJTjDTIeViO70Y=
 github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvWXihfKN4Q=
 github.com/kisielk/errcheck v1.2.0/go.mod h1:/BMXB+zMLi60iA8Vv6Ksmxu/1UDYcXs4uQLJ+jE2L00=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
@@ -549,6 +547,8 @@ github.com/mgechev/dots v0.0.0-20190921121421-c36f7dcfbb81 h1:QASJXOGm2RZ5Ardbc8
 github.com/mgechev/dots v0.0.0-20190921121421-c36f7dcfbb81/go.mod h1:KQ7+USdGKfpPjXk4Ga+5XxQM4Lm4e3gAogrreFAYpOg=
 github.com/mgechev/revive v1.0.7 h1:5kEWTY/W5a0Eiqnkn2BAWsRZpxbs1ft15PsyNC7Rml8=
 github.com/mgechev/revive v1.0.7/go.mod h1:vuE5ox/4L/HDd63MCcCk3H6wTLQ6XXezRphJ8cJJOxY=
+github.com/mhcvs2/kine v0.0.0-20240702054329-2e4449afae56 h1:y6WrdYihMRLbdDSPbVIQFdkZ4c3QbMnw0iOLwsn7cS4=
+github.com/mhcvs2/kine v0.0.0-20240702054329-2e4449afae56/go.mod h1:L4x3qotFebVh1ZVzYwFVL5PPfqw2sRJTjDTIeViO70Y=
 github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
 github.com/miekg/dns v1.1.35/go.mod h1:KNUDUusw/aVsxyTYZM1oqvCicbwhgbNgztCETuNZ7xM=
 github.com/miekg/pkcs11 v1.0.2/go.mod h1:XsNlhZGX73bx86s2hdc/FuaLm2CPZJemRLMA+WTFxgs=
