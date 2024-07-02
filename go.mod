@@ -258,7 +258,7 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/k3s-io/kine => github.com/mhcvs2/kine v0.0.0-20240702054329-2e4449afae56
+replace github.com/k3s-io/kine => github.com/mhcvs2/kine v0.0.0-20240702055530-7aca19258494
 
 //replace (
 //	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.0.0
