@@ -172,6 +172,7 @@ func (o *WardleServerOptions) Config() (*apiserver.Config, error) {
 		GenericConfig: serverConfig,
 		ExtraConfig:   apiserver.ExtraConfig{},
 	}
+	apiserver.GlobalConfig = config
 	return config, nil
 }
 
