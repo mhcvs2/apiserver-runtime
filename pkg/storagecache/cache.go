@@ -5,6 +5,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apiserver/pkg/registry/rest"
+	genericapiserver "k8s.io/apiserver/pkg/server"
 )
 
 var StorageCache = map[schema.GroupResource]rest.Storage{}
@@ -27,3 +28,5 @@ func Get(gr schema.GroupResource) rest.Storage {
 	}
 	return nil
 }
+
+var GlobalGenericConfig *genericapiserver.RecommendedConfig

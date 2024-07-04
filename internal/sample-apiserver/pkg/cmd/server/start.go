@@ -29,6 +29,7 @@ import (
 	utilfeature "k8s.io/apiserver/pkg/util/feature"
 
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
+	"sigs.k8s.io/apiserver-runtime/pkg/storagecache"
 )
 
 // change: apiserver-runtime
@@ -172,7 +173,7 @@ func (o *WardleServerOptions) Config() (*apiserver.Config, error) {
 		GenericConfig: serverConfig,
 		ExtraConfig:   apiserver.ExtraConfig{},
 	}
-	apiserver.GlobalConfig = config
+	storagecache.GlobalGenericConfig = serverConfig
 	return config, nil
 }
 

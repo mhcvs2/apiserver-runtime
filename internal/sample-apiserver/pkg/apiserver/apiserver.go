@@ -55,8 +55,6 @@ type ExtraConfig struct {
 	// Place you custom config here.
 }
 
-var GlobalConfig *Config
-
 // Config defines the config for the apiserver
 type Config struct {
 	GenericConfig *genericapiserver.RecommendedConfig
