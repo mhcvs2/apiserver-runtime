@@ -24,9 +24,14 @@ import (
 	"github.com/spf13/cobra"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	utilerrors "k8s.io/apimachinery/pkg/util/errors"
+	"k8s.io/apiserver/pkg/admission/plugin/namespace/lifecycle"
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	genericoptions "k8s.io/apiserver/pkg/server/options"
 	utilfeature "k8s.io/apiserver/pkg/util/feature"
+
+	validatingadmissionpolicy "k8s.io/apiserver/pkg/admission/plugin/policy/validating"
+	mutatingwebhook "k8s.io/apiserver/pkg/admission/plugin/webhook/mutating"
+	validatingwebhook "k8s.io/apiserver/pkg/admission/plugin/webhook/validating"
 
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
 	"sigs.k8s.io/apiserver-runtime/pkg/storagecache"
@@ -56,7 +61,7 @@ func NewWardleServerOptions(out, errOut io.Writer, versions ...schema.GroupVersi
 		StdErr: errOut,
 	}
 	if o.RecommendedOptions.Admission != nil {
-		o.RecommendedOptions.Admission.RecommendedPluginOrder = []string{}
+		o.RecommendedOptions.Admission.DisablePlugins = []string{lifecycle.PluginName, mutatingwebhook.PluginName, validatingadmissionpolicy.PluginName, validatingwebhook.PluginName}
 	}
 	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
 	o.RecommendedOptions.Etcd.SkipHealthEndpoints = true
@@ -78,7 +83,7 @@ func NewWardleServerOptionsWithPath(out, errOut io.Writer, path string, versions
 		StdErr: errOut,
 	}
 	if o.RecommendedOptions.Admission != nil {
-		o.RecommendedOptions.Admission.RecommendedPluginOrder = []string{}
+		o.RecommendedOptions.Admission.DisablePlugins = []string{lifecycle.PluginName, mutatingwebhook.PluginName, validatingadmissionpolicy.PluginName, validatingwebhook.PluginName}
 	}
 	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
 	o.RecommendedOptions.Etcd.SkipHealthEndpoints = true
