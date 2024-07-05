@@ -55,6 +55,9 @@ func NewWardleServerOptions(out, errOut io.Writer, versions ...schema.GroupVersi
 		StdOut: out,
 		StdErr: errOut,
 	}
+	if o.RecommendedOptions.Admission != nil {
+		o.RecommendedOptions.Admission.RecommendedPluginOrder = []string{}
+	}
 	o.RecommendedOptions.Etcd.StorageConfig.EncodeVersioner = schema.GroupVersions(versions)
 	o.RecommendedOptions.Etcd.SkipHealthEndpoints = true
 	return o

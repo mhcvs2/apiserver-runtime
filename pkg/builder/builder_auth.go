@@ -44,7 +44,7 @@ func (a *Server) WithLocalDebugExtension() *Server {
 			}
 			options.RecommendedOptions.Authorization = nil
 			//options.RecommendedOptions.CoreAPI = nil
-			options.RecommendedOptions.Admission = nil
+			//options.RecommendedOptions.Admission = nil
 		}
 		return options
 	})
