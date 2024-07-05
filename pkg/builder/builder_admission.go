@@ -23,6 +23,7 @@ func (a *Server) WithAdmissionPlugin(name string, plugin admission.Interface) *S
 			o.RecommendedOptions.Admission.Plugins.Register(name, func(config io.Reader) (admission.Interface, error) {
 				return plugin, nil
 			})
+			o.RecommendedOptions.Admission.RecommendedPluginOrder = append(o.RecommendedOptions.Admission.RecommendedPluginOrder, name)
 		}
 		return o
 	})
