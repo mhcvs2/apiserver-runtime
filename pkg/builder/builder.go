@@ -88,6 +88,7 @@ func (a *Server) Build() (*Command, error) {
 	}
 	o := server.NewWardleServerOptionsWithPath(os.Stdout, os.Stderr, a.storagePath, a.orderedGroupVersions...)
 	cmd := server.NewCommandStartServer(o, genericapiserver.SetupSignalHandler())
+
 	server.ApplyFlagsFns(cmd.Flags())
 	cmd.Flags().AddGoFlagSet(flag.CommandLine)
 	return cmd, nil
