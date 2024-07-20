@@ -202,6 +202,8 @@ require (
 	github.com/ultraware/funlen v0.0.3 // indirect
 	github.com/ultraware/whitespace v0.0.4 // indirect
 	github.com/uudashr/gocognit v1.0.1 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
+	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
 	github.com/yeya24/promlinter v0.1.0 // indirect
 	go.etcd.io/bbolt v1.3.9 // indirect
@@ -258,7 +260,7 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/k3s-io/kine => github.com/mhcvs2/kine v0.0.0-20240702055530-7aca19258494
+replace github.com/k3s-io/kine => code.byted.org/inf/kine v0.11.11-0.20240718063249-7addf363c0ae
 
 //replace (
 //	go.opentelemetry.io/otel => go.opentelemetry.io/otel v1.0.0
