@@ -23,6 +23,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	regsitryrest "k8s.io/apiserver/pkg/registry/rest"
+
 	"sigs.k8s.io/apiserver-runtime/internal/sample-apiserver/pkg/apiserver"
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource"
 	"sigs.k8s.io/apiserver-runtime/pkg/builder/resource/resourcerest"
@@ -126,7 +127,11 @@ func (a *Server) WithResourceAndHandler(obj resource.Object, sp rest.ResourceHan
 func (a *Server) WithResourceAndStorage(obj resource.Object, fn rest.StoreFn) *Server {
 	gvr := obj.GetGroupVersionResource()
 	a.schemeBuilder.Register(resource.AddToScheme(obj))
-	return a.forGroupVersionResource(gvr, rest.NewWithFn(obj, fn))
+	parentStorageProvider := rest.NewWithFn(obj, fn)
+
+	_ = a.forGroupVersionResource(gvr, parentStorageProvider)
+	a.withSubResourceIfExists(obj, parentStorageProvider)
+	return a
 }
 
 // forGroupVersionResource manually registers storage for a specific resource.
