@@ -124,10 +124,10 @@ func (a *Server) WithResourceAndHandler(obj resource.Object, sp rest.ResourceHan
 //
 // Note: WithResourceAndHandler should never be called after the GroupResource has already been registered with
 // another version.
-func (a *Server) WithResourceAndStorage(obj resource.Object, fn rest.StoreFn) *Server {
+func (a *Server) WithResourceAndStorage(obj resource.Object, fn rest.StoreFn, s rest.Strategy) *Server {
 	gvr := obj.GetGroupVersionResource()
 	a.schemeBuilder.Register(resource.AddToScheme(obj))
-	parentStorageProvider := rest.NewWithFn(obj, fn)
+	parentStorageProvider := rest.NewWithFn(obj, fn, s)
 
 	_ = a.forGroupVersionResource(gvr, parentStorageProvider)
 	a.withSubResourceIfExists(obj, parentStorageProvider)

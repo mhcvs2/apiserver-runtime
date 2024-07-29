@@ -57,13 +57,15 @@ func NewWithStrategy(obj resource.Object, s Strategy) ResourceHandlerProvider {
 type StoreFn func(*genericregistry.Store, *generic.StoreOptions)
 
 // NewWithFn returns a new etcd backed request handler, applying the StoreFn to the Store.
-func NewWithFn(obj resource.Object, fn StoreFn) ResourceHandlerProvider {
+func NewWithFn(obj resource.Object, fn StoreFn, s Strategy) ResourceHandlerProvider {
 	return func(scheme *runtime.Scheme, optsGetter generic.RESTOptionsGetter) (rest.Storage, error) {
 		gvr := obj.GetGroupVersionResource()
-		s := &DefaultStrategy{
-			Object:         obj,
-			ObjectTyper:    scheme,
-			TableConvertor: rest.NewDefaultTableConvertor(gvr.GroupResource()),
+		if s == nil {
+			s = &DefaultStrategy{
+				Object:         obj,
+				ObjectTyper:    scheme,
+				TableConvertor: rest.NewDefaultTableConvertor(gvr.GroupResource()),
+			}
 		}
 		return newStore(obj.New, obj.NewList, gvr, s, optsGetter, fn)
 	}
